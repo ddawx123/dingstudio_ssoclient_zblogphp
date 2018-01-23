@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin version="php">
+<id>dingstudio_sso</id>
+<name>统一身份验证（SSO）</name>
+<url></url>
+<note>小丁工作室-统一身份验证（SSO）</note>
+<description>小丁工作室-统一身份验证（SSO）,网站的单点登录一体化整合方案。</description>
+<path>configure.php</path>
+<include>include.php</include>
+<level>2</level>
+<author>
+  <name>David Ding</name>
+  <email>ding@dingstudio.cn</email>
+  <url>http://www.dingstudio.cn</url>
+</author>
+<source>
+  <name></name>
+  <email></email>
+  <url></url>
+</source>
+<adapted>151626</adapted>
+<version>1.0</version>
+<pubdate>2018-01-23</pubdate>
+<modified>2018-01-23</modified>
+<price>0</price>
+<phpver>5.5</phpver>
+<advanced>
+  <dependency></dependency>
+  <rewritefunctions></rewritefunctions>
+  <existsfunctions></existsfunctions>
+  <conflict></conflict>
+</advanced>
+<sidebars>
+  <sidebar1></sidebar1>
+  <sidebar2></sidebar2>
+  <sidebar3></sidebar3>
+  <sidebar4></sidebar4>
+  <sidebar5></sidebar5>
+</sidebars>
+</plugin>
