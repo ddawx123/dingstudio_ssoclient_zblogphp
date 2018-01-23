@@ -1,0 +1,2 @@
+# dingstudio_ssoclient_zblogphp
+Z-BlogPHP下适用的SSO客户端插件
