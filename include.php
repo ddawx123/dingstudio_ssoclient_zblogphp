@@ -8,6 +8,7 @@ RegisterPlugin("dingstudio_sso","ActivePlugin_dingstudio_sso");
 function ActivePlugin_dingstudio_sso() {
 	Add_Filter_Plugin('Filter_Plugin_Autoload', 'sso_recheck');
 	Add_Filter_Plugin('Filter_Plugin_Cmd_Begin', 'custom_login_process');
+	Add_Filter_Plugin('Filter_Plugin_Login_Header', 'login_page_interceptor');
 	Add_Filter_Plugin('Filter_Plugin_Member_Edit_Response', 'custom_ucenter');
 }
 /**
@@ -72,6 +73,18 @@ function custom_login_process() {
 			return true;
 			break;
 		}
+	}
+}
+/**
+ * login.php请求过滤器
+ */
+function login_page_interceptor() {
+	global $zbp;
+	if ($zbp->Config('DCPSSO')->available != '1') {
+		return true;
+	}
+	else {
+		echo '<script>alert("已启用统一身份验证，将为您跳转至单点登录页面。");location.href = bloghost + "zb_system/cmd.php?act=login";</script>';
 	}
 }
 /**
