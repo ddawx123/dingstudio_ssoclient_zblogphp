@@ -2,10 +2,17 @@
 #注册插件
 RegisterPlugin("dingstudio_sso","ActivePlugin_dingstudio_sso");
 
+/**
+ * 挂接HOOK函数
+ */
 function ActivePlugin_dingstudio_sso() {
+	Add_Filter_Plugin('Filter_Plugin_Autoload', 'sso_recheck');
 	Add_Filter_Plugin('Filter_Plugin_Cmd_Begin', 'custom_login_process');
 	Add_Filter_Plugin('Filter_Plugin_Member_Edit_Response', 'custom_ucenter');
 }
+/**
+ * 插件安装时创建配置信息存储
+ */
 function InstallPlugin_dingstudio_sso() {
 	global $zbp;
 	if (!$zbp->Config('DCPSSO')->HasKey('version')) {
@@ -21,10 +28,28 @@ function InstallPlugin_dingstudio_sso() {
 	}
 	$zbp->ShowHint('good','ZBP系统接口挂接成功！插件启用完成。');
 }
+/**
+ * 插件卸载善后
+ */
 function UninstallPlugin_dingstudio_sso() {
 	global $zbp;
 	$zbp->DelConfig('DCPSSO');
 	$zbp->ShowHint('good','ZBP系统接口挂接取消！插件停用完成。');
+}
+/**
+ * SSO全局状态检查
+ */
+function sso_recheck() {
+	global $zbp;
+	if ($zbp->Config('DCPSSO')->available != '1') {
+		return true;
+	}
+	else if (!isset($_COOKIE[$zbp->Config('DCPSSO')->cookieName])) {
+		if ($zbp->CheckRights('admin')) {
+			Logout();
+			$zbp->ShowError('系统检测到您已从统一身份认证平台退出或本次会话已过期，请重新登录。', __FILE__, __LINE__);
+		}
+	}
 }
 /**
  * cmd.php请求过滤器
@@ -84,7 +109,7 @@ function ssologin() {
 	}
 	$server = $zbp->Config('DCPSSO')->server;
 	$authpath = $zbp->Config('DCPSSO')->path;
-	if (isset($_COOKIE[$zbp->Config('DCPSSO')->cookieName]) && isset($_COOKIE['dingstudio_ssotoken'])) {
+	if (isset($_COOKIE[$zbp->Config('DCPSSO')->cookieName])) {
 		foreach ($zbp->members as $key => $m) {
 			if ($m->Name == $_COOKIE[$zbp->Config('DCPSSO')->cookieName]) {
 				$m = $zbp->members[$m->ID];
