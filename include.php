@@ -179,5 +179,7 @@ function ssologout() {
 	$server = $zbp->Config('DCPSSO')->server;
 	$authpath = $zbp->Config('DCPSSO')->path;
 	Logout();
+	setcookie($zbp->Config('DCPSSO')->cookieName, null, time() - 3600, '/', '', false, true);
+	unset($_COOKIE[$zbp->Config('DCPSSO')->cookieName]);
 	Redirect($protocol.$server.$authpath.'logout?action=dologout&url='.urlencode($zbp->host));
 }
