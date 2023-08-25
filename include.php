@@ -126,6 +126,11 @@ function ssologin() {
 		foreach ($zbp->members as $key => $m) {
 			if ($m->Name == $_COOKIE[$zbp->Config('DCPSSO')->cookieName]) {
 				$m = $zbp->members[$m->ID];
+				if (function_exists('SetLoginCookie')) {
+					SetLoginCookie($m, time() + 3600);
+					Redirect('admin/?act=admin');
+					die();
+				}
 				$un = $m->Name;
 				if ($zbp->version > 131221) {
 					$ps = md5($m->Password . $zbp->guid);
@@ -156,7 +161,7 @@ function ssologin() {
 		Redirect('cmd.php?act=login');
 		die();
 	}
-	Redirect($protocol.$server.$authpath.'classicLoginDispatcher?mod=caslogin&returnUrl='.urlencode($zbp->host.$zbp->currenturl));
+	Redirect($protocol.$server.$authpath.'classicLoginDispatcher?mod=crossdomain&returnUrl='.urlencode($zbp->host.$zbp->currenturl));
 }
 /**
  * 单点登出过程
