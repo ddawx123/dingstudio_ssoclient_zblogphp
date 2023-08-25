@@ -156,7 +156,7 @@ function ssologin() {
 		Redirect('cmd.php?act=login');
 		die();
 	}
-	Redirect($protocol.$server.$authpath.'login.php?mod=caslogin&returnUrl='.urlencode($zbp->host.$zbp->currenturl));
+	Redirect($protocol.$server.$authpath.'classicLoginDispatcher?mod=caslogin&returnUrl='.urlencode($zbp->host.$zbp->currenturl));
 }
 /**
  * 单点登出过程
@@ -174,5 +174,5 @@ function ssologout() {
 	$server = $zbp->Config('DCPSSO')->server;
 	$authpath = $zbp->Config('DCPSSO')->path;
 	Logout();
-	Redirect($protocol.$server.$authpath.'login.php?action=dologout&url='.urlencode($zbp->host));
+	Redirect($protocol.$server.$authpath.'logout?action=dologout&url='.urlencode($zbp->host));
 }
