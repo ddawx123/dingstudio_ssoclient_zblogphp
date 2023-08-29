@@ -105,7 +105,7 @@ function custom_ucenter() {
 	}
 	$server = $zbp->Config('DCPSSO')->server;
 	$authpath = $zbp->Config('DCPSSO')->path;
-	Redirect($protocol.$server.$authpath.'usercenter.php?appname=zblogphp&referer='.urlencode($zbp->host.$zbp->currenturl));
+	Redirect($protocol.$server.$authpath.'ucenter?appname=zblogphp&referer='.urlencode($zbp->host.$zbp->currenturl));
 }
 /**
  * 单点登录过程
